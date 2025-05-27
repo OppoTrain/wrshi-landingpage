@@ -1,9 +1,11 @@
 'use client';
+import React from 'react';
 
 import { useState } from 'react';
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import { RefObject } from "react";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 interface TargetSectionProps {
   scrollToRef: RefObject<HTMLElement | null>;
@@ -12,6 +14,8 @@ interface TargetSectionProps {
 export default function WorkerForm({ scrollToRef }: TargetSectionProps) {
   const [role, setRole] = useState('عامل');
   const [job, setJob] = useState("");
+
+const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
 
   return (
 
@@ -23,7 +27,7 @@ export default function WorkerForm({ scrollToRef }: TargetSectionProps) {
 
           {/* Nav Toggle - Top Center */}
           <div className="mb-10">
-            <div className="bg-gray-200 rounded-full p-2 flex gap-5">
+            <div className="bg-gray-200 rounded-full p-2 flex gap-5 border border-gray-300">
               <button
               className={`min-w-[200px] py-3 px-6 text-lg font-semibold rounded-full transition duration-200 cursor-pointer ${
                   role === 'عامل'
@@ -54,8 +58,19 @@ export default function WorkerForm({ scrollToRef }: TargetSectionProps) {
 
             <div className="flex flex-col items-center p-6 text-right" dir="rtl">
               <h2 className="text-lg font-semibold mb-1">انت عامل او فني ؟</h2>
-              <p className="mb-6 text-gray-600">سجّل بياناتك وخلينا نوصلك بأقرب فرصة شغل!</p>
+                  <p className="mb-6 text-gray-600">سجّل بياناتك وخلينا نوصلك بأقرب فرصة شغل!</p>
+              {/* {role =='عامل' ?(
+                <div className="flex flex-col items-center p-6 text-right" dir="rtl">
+                  <h2 className="text-lg font-semibold mb-1">انت عامل او فني ؟</h2>
+                  <p className="mb-6 text-gray-600">سجّل بياناتك وخلينا نوصلك بأقرب فرصة شغل!</p>
+                </div> 
+              ):(
+                <div className="flex flex-col items-center p-6 text-right" dir="rtl">
+                  <h2 className="text-lg font-semibold mb-1">أنت صاحب ورشة تبحث عن عمال؟  </h2>
+                  <p className="mb-6 text-gray-600">سجّل بياناتك وخلينا نحققلك أهدافك !</p>
+                </div>
 
+              )} */}
               <form className="w-full max-w-sm space-y-4">
                 <div className="relative">
                   <FaUser className="absolute top-3 right-3 text-gray-500" />
@@ -70,25 +85,88 @@ export default function WorkerForm({ scrollToRef }: TargetSectionProps) {
                   <FaPhoneAlt className="absolute top-3 right-3 text-gray-500" />
                   <input
                     type="tel"
-                    placeholder="رقم الهاتف"
+                    placeholder="رقم الهاتف مع مقدمة الواتس"
                     className="w-full text-right pl-4 pr-10 py-2 rounded-full bg-green-100 focus:outline-none border border-gray-300"
                   />
                 </div>
 
                 <div className="relative">
-                  <MdWork className="absolute top-3 right-3 text-gray-500" />
-                  <select  value={job}
+                  {role === 'مشغل' ?(
+                    <>
+                     <FaMapMarkerAlt className="absolute top-3 right-3 text-gray-500" />
+                    <select  value={job}
                     onChange={(e) => setJob(e.target.value)}
                     className={`w-full pl-4 pr-10 py-2 rounded-full bg-green-100 focus:outline-none border border-gray-300
                       ${job === "" ? "text-gray-500" : "text-black"}`}
-                  >
-                    <option value="" disabled hidden>المهنة</option>
-                    <option value="electrician">كهربائي</option>
-                    <option value="plumber">سبّاك</option>
-                    <option value="mechanic">ميكانيكي</option>
-                    <option value="other">أخرى</option>
-                  </select>
+                    >
+                      <option value="" disabled hidden>الموقع</option>
+                      <option value="نابلس">نابلس</option>
+                      <option value="جنين">جنين</option>
+                      <option value="طولكرم">طولكرم</option>
+                      <option value="قلقيلية">قلقيلية</option>
+                      <option value="رام الله">رام الله</option>
+                      <option value="سلفيت">سلفيت</option>
+                      <option value="أريحا">أريحا</option>
+                      <option value="الخليل">الخليل</option>
+                      <option value="بيت لحم">بيت لحم</option>
+
+                    </select>
+                    </>
+                  ):(
+                    <>
+                      <MdWork className="absolute top-3 right-3 text-gray-500" />
+                        <select
+                          value={job}
+                    onChange={(e) => setJob(e.target.value)}
+                    className={`w-full pl-4 pr-10 py-2 rounded-full bg-green-100 focus:outline-none border border-gray-300
+                      ${job === "" ? "text-gray-500" : "text-black"}`}
+                        >
+                          <option value="" disabled hidden>المهنة</option>
+                          <option value="كهربائي">كهربائي</option>
+                          <option value="سبّاك">سبّاك</option>
+                          <option value="ميكانيكي">ميكانيكي</option>
+                          {/* ...other options... */}
+                        </select>
+                    </>
+
+                  )}
+                  
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
 
                 <button
                   type="submit"
